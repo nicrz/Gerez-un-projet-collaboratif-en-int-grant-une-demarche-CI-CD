@@ -55,14 +55,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-      - name: Build and analyze frontend
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          npm install
-          npm run test
+          node-version: ${{matrix.node-version}}
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test:prod
       - name: Build and analyze
         uses: SonarSource/sonarcloud-github-action@master
         with:
