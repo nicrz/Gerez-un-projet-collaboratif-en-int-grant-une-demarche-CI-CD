@@ -66,7 +66,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          cd front
-          npm install
-          npm run sonar-scanner
+        with:
+          projectBaseDir: front/
