@@ -62,8 +62,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           npm install
-          npm run test:prod
-      - name: Build and analyze frontend
+          npm run test
+      - name: Build and analyze
         uses: SonarSource/sonarcloud-github-action@master
         with:
           projectBaseDir: front
