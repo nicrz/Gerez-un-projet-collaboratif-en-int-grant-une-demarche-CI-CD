@@ -69,4 +69,4 @@ jobs:
         run: |
           cd front
           npm install
-          npm run sonar-scanner
+          npm run sonar-scanner -Dsonar.projectKey=nicrz_bobapp-front
