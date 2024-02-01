@@ -28,11 +28,7 @@ jobs:
       run: npm install
 
     - name: Run tests
-      run: npm run test
-
-    # Génération du rapport de couverture
-    - name: Generate coverage report
-      run: npm run coverage
+      run: npm test -- --configuration=ci
 
     # Commit du rapport de couverture
     - name: Commit coverage report
