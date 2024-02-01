@@ -1,9 +1,7 @@
 name: Docker images
 on:
   workflow_run:
-    workflows:
-      - "Tests back-end"
-      - "Tests front-end"
+    workflows: ["Tests"]
     types:
       - completed
       
