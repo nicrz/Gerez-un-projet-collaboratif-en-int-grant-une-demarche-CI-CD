@@ -1,0 +1,65 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  tests_back:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./back
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build and test back-end
+        run: |
+          mvn clean install
+          mvn test
+
+      - name: Commit back-end coverage report
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "ruiz.nico64@gmail.com"
+          git add .
+          git commit -m "Add JaCoCo coverage report for back-end"
+          git push
+
+  tests_front:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./front
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run front-end tests
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless --code-coverage
+
+      - name: Commit front-end coverage report
+        run: |
+          git config --global user.name "Nicolas"
+          git config --global user.email "ruiz.nico64@gmail.com"
+          git add .
+          git commit -m "Add coverage report for front-end"
+          git push
